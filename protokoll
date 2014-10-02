@@ -1,0 +1,44 @@
++++ THOMAS-Protokoll +++
+
+
+Arduino Sensorsystem => Mainboard
+
+INFOTYP\n {
+	0 {
+		MELDUNGSTYP
+		FEHLERID
+	}
+	1 {
+		SENSORTYP {
+			0 {
+				SENSORZAHL
+				SENSORWERT\n
+			}
+		}
+	}
+}
+
+
+
++++ Definitionen +++
+
+
+Infotyp (byte):
+0 = Systemstatus
+1 = Sensordaten
+
+Meldungstyp (byte):
+0 = Mitteilung
+1 = Warnung
+2 = Fehler
+3 = Kritischer Fehler (Programm sollte abgebrochen werden!)
+
+FehlerID (byte):
+0 = Nicht alle Ultraschallsensoren funktionsfähig
+
+Sensortyp (byte):
+0 = Ultraschallsensor
+
+Sensorzahl (byte)
+
+Sensorwert (dezimal)
