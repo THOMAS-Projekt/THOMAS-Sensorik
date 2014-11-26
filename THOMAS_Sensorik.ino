@@ -28,11 +28,7 @@
 #define IR_yellow 0x276F
 #define IR_textup 0x2770
 #define IR_fav 0x2784
-<<<<<<< HEAD
 #define IR_window 0x274B  // Funktion: Sensorstati aktualisieren
-=======
-#define IR_window 0x274B
->>>>>>> 422fbde7dcbda5e2636878bd692f2db76dc08b2b
 #define IR_onetwo 0x274E
 #define IR_textdown 0x273C
 #define IR_guide 0x27CC
@@ -87,7 +83,6 @@ void setup()
 // Main-Schleife
 void loop()
 {
-<<<<<<< HEAD
   // Sensordaten verarbeiten und senden
   process_US();
   
@@ -158,13 +153,6 @@ void check_US()
 
 // Prüft auf Infrarot-Signale und verarbeitet diese
 void proccess_IR()
-=======
-  
-}
-
-// Prüft auf Infrarot-Signale und verarbeitet diese
-void proccess_IRcmd()
->>>>>>> 422fbde7dcbda5e2636878bd692f2db76dc08b2b
 {
   // Daten abrufen und in einen hexadezimalen String konvertieren
   String data = String(IR_read(), HEX);
@@ -175,7 +163,6 @@ void proccess_IRcmd()
     // Daten empfangen => Inhalt verarbeiten
     switch(data)
     {
-<<<<<<< HEAD
       // Sensorstatus aktualisieren
       case IR_window:
         // Ultraschallsensoren prüfen und evtl. Fehler ausgeben
@@ -186,11 +173,3 @@ void proccess_IRcmd()
     }
   }
 }
-=======
-      case IR_OK:
-        //  TODO: statusmenü durchlaufbaar, funktionstasten zeigen spezielle daten an
-        break;
-    }
-  }
-}
->>>>>>> 422fbde7dcbda5e2636878bd692f2db76dc08b2b
