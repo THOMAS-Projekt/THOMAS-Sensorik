@@ -1,44 +1,56 @@
-+++ THOMAS-Protokoll +++
++++ THOMAS-Protokoll (Version 1.3) +++
+
+THOMAS => Arduino
 
 
-Arduino Sensorsystem => Mainboard
-
-INFOTYP\n {
-	0 {
-		MELDUNGSTYP
-		FEHLERID
+<byte> Anfrage
+	0 => Meldung ausgeben
+	{
+		<byte> Priorität (0 - 2)
+		<byte> Textlänge
+		<byte[Textlänge * Länge char]> Text
 	}
-	1 {
-		SENSORTYP {
-			0 {
-				SENSORZAHL
-				SENSORWERT\n
+	
+	1 => Sensoren ansprechen
+	{
+		<byte> Sensortyp
+			0 => Ultraschallsensoren
+			{
+				<byte> Sensor-ID (0 - 4)
+				<byte> Befehl
+					0 => Status aktualisieren
+					{
+						Rückgabe: <byte> Status (0 -> Sensor O.K. | 1 -> Defekt)
+					}
+					
+					1 => Status abrufen
+					{
+						Rückgabe: <byte> Status (0 -> Sensor O.K. | 1 -> Defekt)
+					}
+					
+					2 => Messwert abrufen
+					{
+						Rückgabe: <byte[Länge int]> Messwert in cm
+					}
 			}
-		}
+	}
+	2 => Aktoren ansprechen
+	{
+		<byte> Gerät
+			0 => Kameraservo(s)
+			{
+				<byte> Servo-ID (0 - /)
+				<byte> Befehl
+					0 => Drehe auf Wert
+					{
+						<byte[Länge int]> Position in grad
+					}
+					
+					1 => Drehe um Wert
+					{
+						<byte> Richtung (0 -> Nach links | 1 -> Nach rechts)
+						<byte[Länge int]> Änderungswert in grad
+					}
+			}
 	}
 }
-
-
-
-+++ Definitionen +++
-
-
-Infotyp (byte):
-0 = Systemstatus
-1 = Sensordaten
-
-Meldungstyp (byte):
-0 = Mitteilung
-1 = Warnung
-2 = Fehler
-3 = Kritischer Fehler (Programm sollte abgebrochen werden!)
-
-FehlerID (byte):
-0 = Nicht alle Ultraschallsensoren funktionsfähig
-
-Sensortyp (byte):
-0 = Ultraschallsensor
-
-Sensorzahl (byte)
-
-Sensorwert (dezimal)
