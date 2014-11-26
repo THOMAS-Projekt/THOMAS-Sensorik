@@ -9,11 +9,7 @@
 // Echo-Ports
 int US_echo_pins[] = {2, 3, 4, 5, 6};
 
-<<<<<<< HEAD
 // Anzahl der Sensoren (Darf 256 nicht übersteigen, sonst Protokollanpassung erforderlich!)
-=======
-// Anzahl der Sensoren
->>>>>>> 422fbde7dcbda5e2636878bd692f2db76dc08b2b
 int US_count = 5;
 
 // Bezeichnungen
@@ -106,8 +102,4 @@ int US_get_count()
 {
    // Sensoranzahl zurückgeben
    return US_count;
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 422fbde7dcbda5e2636878bd692f2db76dc08b2b
