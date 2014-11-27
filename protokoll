@@ -1,17 +1,23 @@
-+++ THOMAS-Protokoll (Version 1.3) +++
++++ THOMAS-Protokoll (Version 1.4) +++
 
 THOMAS => Arduino
 
 
 <byte> Anfrage
-	0 => Meldung ausgeben
+	0 => Heartbeat
+	{
+		Rückgabe: <byte> Bestätigung: 1
+	}
+
+	1 => Meldung ausgeben
 	{
 		<byte> Priorität (0 - 2)
 		<byte> Textlänge
 		<byte[Textlänge * Länge char]> Text
+		Rückgabe: <byte> Textlänge
 	}
 	
-	1 => Sensoren ansprechen
+	2 => Sensoren ansprechen
 	{
 		<byte> Sensortyp
 			0 => Ultraschallsensoren
@@ -34,7 +40,8 @@ THOMAS => Arduino
 					}
 			}
 	}
-	2 => Aktoren ansprechen
+	
+	3 => Aktoren ansprechen
 	{
 		<byte> Gerät
 			0 => Kameraservo(s)
@@ -44,12 +51,14 @@ THOMAS => Arduino
 					0 => Drehe auf Wert
 					{
 						<byte[Länge int]> Position in grad
+						Rückgabe: <byte[Länge int]> Neue Position in grad
 					}
 					
 					1 => Drehe um Wert
 					{
 						<byte> Richtung (0 -> Nach links | 1 -> Nach rechts)
 						<byte[Länge int]> Änderungswert in grad
+						Rückgabe: <byte[Länge int]> Neue Position in grad
 					}
 			}
 	}
