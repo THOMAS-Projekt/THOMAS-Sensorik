@@ -3,6 +3,13 @@
 THOMAS => Arduino
 
 
+Aufbau einer Übermittlung:
+<byte> Paketlänge
+<byte[Paketlänge]> Paket
+
+
+Zusammensetzung eines Paketes:
+
 <byte> Anfrage
 	0 => Heartbeat
 	{
