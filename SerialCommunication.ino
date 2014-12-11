@@ -1,5 +1,5 @@
 // Empfangene Daten Array mit der größe des empfangenen Arrays
-byte receivedBytes[127];
+byte receivedBytes[255];
 
 // TODO: Code in die vorhandene Methode einfügen
 void setup()
@@ -91,7 +91,8 @@ int writeMessage(byte data[])
   
   for(int i = 0; i < textLength; i++)
   {
-     text[i] = data[i+4] 
+     // Byte Array in Text Array schreiben
+     text[i] = data[i+4]; 
   }
   
   // TODO: text Array auf LCD anzeigen
