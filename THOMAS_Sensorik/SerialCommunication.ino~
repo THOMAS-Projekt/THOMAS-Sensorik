@@ -1,4 +1,4 @@
-/*// Empfangene Daten Array mit der größe des empfangenen Arrays
+// Empfangene Daten Array mit der größe des empfangenen Arrays
 byte receivedBytes[255];
 
 // TODO: Code in die vorhandene Methode einfügen
@@ -99,4 +99,4 @@ int writeMessage(byte data[])
   
   return textLength;
   
-}*/
+}

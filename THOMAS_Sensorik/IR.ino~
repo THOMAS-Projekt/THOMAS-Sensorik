@@ -13,28 +13,28 @@ decode_results results;
 // Initialisierung
 void IR_init()
 {
-	// Empfänger starten
-	irrecv.enableIRIn();
+  // Empfänger starten
+  irrecv.enableIRIn();
 }
 
 // Daten empfangen
 int IR_read()
 {
-	// Daten überprüfen
-	if(irrecv.decode(&results))
-	{
-		// Daten vorhanden => Daten zwischenspeichern
-		int IR_data = results.value;
-
-		// Auf nächsten Wert vorbereiten
-		irrecv.resume();
-
-		// Daten zurückgeben
-		return IR_data;
-	}
-	else
-	{
-		// Keine Daten vorhanden => NULL zurückgeben
-		return 0; 
-	}
+  // Daten überprüfen
+  if(irrecv.decode(&results))
+  {
+    // Daten vorhanden => Daten zwischenspeichern
+    int IR_data = results.value;
+    
+    // Nächsten Wert empfangen
+    irrecv.resume();
+    
+    // Daten zurückgeben
+    return IR_data;
+  }
+  else
+  {
+    // Keine Daten vorhanden => NULL zurückgeben
+    return 0; 
+  }
 }

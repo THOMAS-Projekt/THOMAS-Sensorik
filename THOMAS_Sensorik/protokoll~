@@ -23,7 +23,7 @@ Zusammensetzung eines Paketes:
 		<byte[Textlänge * Länge char]> Text
 		Rückgabe: <byte> Textlänge
 	}
-
+	
 	2 => Sensoren ansprechen
 	{
 		<byte> Sensortyp
@@ -35,19 +35,19 @@ Zusammensetzung eines Paketes:
 					{
 						Rückgabe: <byte> Status (0 -> Sensor O.K. | 1 -> Defekt)
 					}
-
+					
 					1 => Status abrufen
 					{
 						Rückgabe: <byte> Status (0 -> Sensor O.K. | 1 -> Defekt)
 					}
-
+					
 					2 => Messwert abrufen
 					{
 						Rückgabe: <byte[Länge int]> Messwert in cm
 					}
 			}
 	}
-
+	
 	3 => Aktoren ansprechen
 	{
 		<byte> Gerät
@@ -60,7 +60,7 @@ Zusammensetzung eines Paketes:
 						<byte[Länge int]> Position in grad
 						Rückgabe: <byte[Länge int]> Neue Position in grad
 					}
-
+					
 					1 => Drehe um Wert
 					{
 						<byte> Richtung (0 -> Nach links | 1 -> Nach rechts)
