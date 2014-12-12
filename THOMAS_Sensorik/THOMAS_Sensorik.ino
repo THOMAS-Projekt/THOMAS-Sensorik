@@ -17,9 +17,6 @@
 #define HW_DEFEKT 0
 #define HW_OK 1
 
-// Baudrate für serielle Schnittstelle
-#define SR_baud 9600
-
 // Infrarot-Befehle
 #define IR_mute "0x270D"
 #define IR_power "0x270C"
@@ -65,7 +62,7 @@
 void setup()
 {
 	// Serielle Schnittstelle initialisieren
-	Serial.begin(SR_baud);
+	SR_init();
 
 	// LCD initialisieren
 	LCD_init();
@@ -78,6 +75,9 @@ void setup()
 
 	// Ultraschallsensoren auf Funktionsfähigkeit prüfen
 	US_reload_stat();
+
+	// Bereit!
+	SR_ready();
 }
 
 // Main-Schleife

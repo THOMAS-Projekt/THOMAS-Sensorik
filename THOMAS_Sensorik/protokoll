@@ -1,7 +1,7 @@
-+++ THOMAS-Protokoll (Version 1.4) +++
++++ THOMAS-Protokoll (Version 1.5) +++
 
+======================================
 THOMAS => Arduino
-
 
 Aufbau einer Übermittlung:
 <byte> Paketlänge
@@ -68,5 +68,22 @@ Zusammensetzung eines Paketes:
 						Rückgabe: <byte[Länge int]> Neue Position in grad
 					}
 			}
+	}
+}
+
+======================================
+Arduino => THOMAS
+
+Aufbau einer Übermittlung:
+<byte> Paketlänge
+<byte[Paketlänge]> Paket
+
+
+Zusammensetzung eines Paketes:
+
+<byte> Anfrage
+	0 => Start erfolgreich
+	{
+		Rückgabe: <byte> Bestätigung: 1
 	}
 }
