@@ -53,7 +53,7 @@ void serialEvent()
 }
 
 // Ein Paket an den PC senden
-void SR_send(byte package[], unsigned int package_length)
+void SR_send(uint8_t package[], unsigned int package_length)
 {
 	// Paketlänge gültig?
 	if(package_length > 0 && package_length < 256)
@@ -82,7 +82,14 @@ void SR_parse(char package[], unsigned int package_length)
 	{
 		// Heartbeat
 		case 0:
-			SR_send({1}, 1);
+			// Paket erstellen
+			uint8_t resp[1];
+			resp[0] = 1;
+
+			// Paket senden
+			SR_send(resp, sizeof(resp) / sizeof(uint8_t));
+
+			// Fertig!
 			break;
 
 		// Meldung ausgeben
