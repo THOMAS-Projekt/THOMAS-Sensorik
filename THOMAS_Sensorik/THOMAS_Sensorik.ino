@@ -74,7 +74,7 @@ void setup()
 	US_init();
 
 	// Ultraschallsensoren auf Funktionsfähigkeit prüfen
-	US_reload_stat();
+	US_reload_all();
 
 	// Bereit!
 	SR_ready();
@@ -97,6 +97,30 @@ void process_IR()
 	if(data == IR_window)
 	{
 		// Sensorzustände aktualisieren
-		US_reload_stat();
+		US_reload_all();
 	}
+}
+
+// Info
+void info(String message)
+{
+	// Ausgabe
+	LCD_print_string(0, 3, "INF: " + message);
+}
+
+// Warnung
+void warning(String message)
+{
+	// Ausgabe
+	LCD_print_string(0, 3, "WARN: " + message);
+}
+
+// Fehler
+void error(String message)
+{
+	// Ausgabe
+	LCD_print_string(0, 3, "ERR: " + message);
+
+	// Programm stoppen
+	while(true){}
 }

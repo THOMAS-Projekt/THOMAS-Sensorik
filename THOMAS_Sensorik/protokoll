@@ -43,7 +43,7 @@ Zusammensetzung eines Paketes:
 
 					2 => Messwert abrufen
 					{
-						Rückgabe: <byte[Länge int]> Messwert in cm
+						Rückgabe: <byte> Messwert in cm (Eine Einheit entspricht 2cm)
 					}
 			}
 	}
@@ -69,6 +69,23 @@ Zusammensetzung eines Paketes:
 					}
 			}
 	}
+
+	4 => Status setzten
+	{
+		<byte> Eigenschaft
+			0 => Wlan-SSID
+			{
+				<byte> Textlänge
+				<byte[Textlänge * Länge char]> Neue SSID
+				Rückgabe: <byte> Bestätigung: 1
+			}
+
+			1 => Wlan-Stärke
+			{
+				<byte> Signalstärke (0-100%)
+				Rückgabe: <byte> Bestätigung: 1
+			}
+	}
 }
 
 ======================================
@@ -84,6 +101,6 @@ Zusammensetzung eines Paketes:
 <byte> Anfrage
 	0 => Start erfolgreich
 	{
-		Rückgabe: <byte> Bestätigung: 1
+		Server-Software auf THOMAS startet.
 	}
 }

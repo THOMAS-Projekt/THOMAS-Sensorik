@@ -1,13 +1,13 @@
 // ++++++++++++++++++++<[ DEFINITIONEN ]>++++++++++++++++++++
 // Trigger-Port
-#define US_trig_pin 12
+#define US_trig_pin 36
 
 // Sensor-Timeout in µs
 #define US_timeout 250000
 
 // ++++++++++++++++++++<[ VARIABELN ]>++++++++++++++++++++
 // Echo-Ports
-int US_echo_pins[] = {2, 3, 4, 5, 6};
+int US_echo_pins[] = {44, 3, 4, 5, 6};
 
 // Anzahl der Sensoren (Darf 256 nicht übersteigen, sonst Protokollanpassung erforderlich!)
 int US_count = 5;
@@ -63,22 +63,29 @@ long US_get_cm(int index)
 }
 
 // Prüft welche Sensoren funktionieren und welche Defekt scheinen
-void US_reload_stat()
+void US_reload_all()
 {
 	// Alle Sensoren durchlaufen
 	for(int i = 0; i < US_count; i++)
 	{
-		// Prüfen ob der Sensor auf Anfragen reagiert
-		if(US_get_cm(i) == 0)
-		{
-			// Sensor antwortet nicht => Defekt
-			US_stat[i] = HW_DEFEKT;
-		}
-		else
-		{
-			// Sensor sendet brauchbare Antwort => alles OK
-			US_stat[i] = HW_OK;
-		}
+		// Sensor prüfen
+		US_reload_stat(i);
+	}
+}
+
+// Prüft den Sensor auf Funktionalität
+void US_reload_stat(int index)
+{
+	// Prüfen ob der Sensor auf Anfragen reagiert
+	if(US_get_cm(index) == 0)
+	{
+		// Sensor antwortet nicht => Defekt
+		US_stat[index] = HW_DEFEKT;
+	}
+	else
+	{
+		// Sensor sendet brauchbare Antwort => alles OK
+		US_stat[index] = HW_OK;
 	}
 }
 
@@ -89,11 +96,11 @@ boolean US_get_stat(int index)
 	if(index < US_count)
 	{
 		// Status zurückgeben
-		return US_stat[index];
+		return US_stat[index] == HW_OK;
 	}
 	else
 	{
-		return HW_DEFEKT; 
+		return false;
 	}
 }
 

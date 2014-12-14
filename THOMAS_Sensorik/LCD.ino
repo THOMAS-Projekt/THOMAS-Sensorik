@@ -30,6 +30,9 @@ void LCD_init()
 
 	// Hintergrundbeleuchtung einschalten
 	lcd.setBacklight(LED_ON);
+
+	// Display leeren
+	LCD_clear();
 }
 
 // LCD leeren
