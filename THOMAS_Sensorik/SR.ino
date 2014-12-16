@@ -117,6 +117,13 @@ void SR_parse(char package[], unsigned int package_length)
 		// Meldung ausgeben
 		case 1:
 		{
+			// Paketlänge prüfen
+			if (package_length < 3)
+			{
+				// Fehlermeldung
+				error("Fehler #002");
+			}
+
 			// Priorität abrufen
 			int priority = package[1];
 
@@ -125,6 +132,13 @@ void SR_parse(char package[], unsigned int package_length)
 
 			// Text abrufen
 			char text[text_length];
+
+			// Paketlänge prüfen
+			if (package_length != text_length + 3)
+			{
+				// Fehlermeldung
+				error("Fehler #003");
+			}
 
 			// Textangabe durchlaufen
 			for(int i = 0; i< text_length; i++)
@@ -187,12 +201,26 @@ void SR_parse(char package[], unsigned int package_length)
 		// Sensoren ansprechen
 		case 2:
 		{
+			// Paketlänge prüfen
+			if (package_length < 2)
+			{
+				// Fehlermeldung
+				error("Fehler #004");
+			}
+
 			// Zwischen Sensortypen unterscheiden
 			switch(package[1])
 			{
 				// Ultraschallsensor
 				case 0:
 				{
+					// Paketlänge prüfen
+					if (package_length < 4)
+					{
+						// Fehlermeldung
+						error("Fehler #005");
+					}
+
 					// Sensor-ID abrufen
 					int us_id = package[2];
 
@@ -284,17 +312,38 @@ void SR_parse(char package[], unsigned int package_length)
 		// Status setzen
 		case 4:
 		{
+			// Paketlänge prüfen
+			if (package_length < 2)
+			{
+				// Fehlermeldung
+				error("Fehler #006");
+			}
+
 			// Eigenschaft wählen
 			switch(package[1])
 			{
 				// Wlan-SSID
 				case 0:
 				{
+					// Paketlänge prüfen
+					if (package_length < 3)
+					{
+						// Fehlermeldung
+						error("Fehler #007");
+					}
+
 					// Länge der SSId abrufen
 					int ssid_length = package[2];
 
 					// Char-Array für die SSID
 					char ssid[ssid_length];
+
+					// Paketlänge prüfen
+					if (package_length != ssid_length + 3)
+					{
+						// Fehlermeldung
+						error("Fehler #008");
+					}
 
 					// Zeichen durchlaufen
 					for(int i = 0; i < ssid_length; i++)
@@ -316,6 +365,13 @@ void SR_parse(char package[], unsigned int package_length)
 				// Wlan-Stärke
 				case 1:
 				{
+					// Paketlänge prüfen
+					if (package_length < 3)
+					{
+						// Fehlermeldung
+						error("Fehler #009");
+					}
+
 					// Signal-Stärke abrufen
 					int wlan_strength = package[2];
 
