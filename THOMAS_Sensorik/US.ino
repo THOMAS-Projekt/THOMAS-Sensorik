@@ -7,16 +7,16 @@
 
 // ++++++++++++++++++++<[ VARIABELN ]>++++++++++++++++++++
 // Echo-Ports
-int US_echo_pins[] = {44, 3, 4, 5, 6};
+int US_echo_pins[] = {2, 3, 44, 5, 6};
 
 // Anzahl der Sensoren (Darf 256 nicht übersteigen, sonst Protokollanpassung erforderlich!)
 int US_count = 5;
 
-// Bezeichnungen
-String US_names[] = {"Sensor 1", "Sensor 2", "Sensor 3", "Sensor 4", "Sensor 5"};
-
 // Definiert den Status jedes Sensors (Standardwert: HW_DEFEKT)
 boolean US_stat[] = {HW_DEFEKT, HW_DEFEKT, HW_DEFEKT, HW_DEFEKT, HW_DEFEKT};
+
+// Gibt die Ergebnisse der letzten Messungen an
+long US_last_cm[] = {0, 0, 0, 0, 0};
 
 // Zwischenspeicher für die Zeitmessung
 long US_duration;
@@ -52,13 +52,38 @@ long US_get_cm(int index)
 		// Die länge des Rückgabe-Impulses messen
 		US_duration = pulseIn(US_echo_pins[index], HIGH, US_timeout);
 
-		// Impulslänge in eine Distanz umrechnen und diese zurückgeben (Schallgeschwindigkeit: 340 m/s, 29 µs/cm)
-		return US_duration / 58;
+		// Impulslänge in eine Distanz umrechnen (Schallgeschwindigkeit: 340 m/s, 29 µs/cm)
+		long val = US_duration / 58;
+
+		// Messung merken
+		US_last_cm[index] = val;
+
+		// Messwert zurückgeben
+		return val;
 	}
 	else
 	{
 		// Sensor nicht definiert => Fehlerhaften Wert zurückgeben
 		return 0;
+	}
+}
+
+// Die Entfernung des angegebenen Sensors als String formatieren und zurückgeben
+String US_get_str(int index)
+{
+	// Defekt?
+	if(US_get_stat(index) == HW_DEFEKT)
+	{
+		// Ja => Info zurückgeben
+		return "DEF";
+	}
+	else
+	{
+		// Nein => Wert der letzten Messung abrufen abrufen
+		long val = US_last_cm[index];
+
+		// Formatierten String zurückgeben
+		return String(val) + "cm";
 	}
 }
 

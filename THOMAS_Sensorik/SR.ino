@@ -6,7 +6,11 @@
 #define SR_timeout 1000
 
 // ++++++++++++++++++++<[ VARIABELN ]>++++++++++++++++++++
-// TODO
+// Die aktuelle SSID
+String status_ssid = "?";
+
+// Die aktuelle Signalstärke
+String status_strength = "?";
 
 // ++++++++++++++++++++<[ FUNKTIONEN ]>++++++++++++++++++++
 // Initialisierung
@@ -67,7 +71,7 @@ void SR_send(char package[], unsigned int package_length)
 		Serial.write(package_length);
 
 		// Package Array senden
-		for(int i = 0; i < package_length; i++){
+		for(int i = 0; i < (int) package_length; i++){
 			Serial.write(package[i]);
 		}
 	}
@@ -134,7 +138,7 @@ void SR_parse(char package[], unsigned int package_length)
 			char text[text_length];
 
 			// Paketlänge prüfen
-			if (package_length != text_length + 3)
+			if ((int)package_length != text_length + 3)
 			{
 				// Fehlermeldung
 				error("Fehler #003");
@@ -339,7 +343,7 @@ void SR_parse(char package[], unsigned int package_length)
 					char ssid[ssid_length];
 
 					// Paketlänge prüfen
-					if (package_length != ssid_length + 3)
+					if ((int) package_length != ssid_length + 3)
 					{
 						// Fehlermeldung
 						error("Fehler #008");
@@ -352,8 +356,8 @@ void SR_parse(char package[], unsigned int package_length)
 						ssid[i] = package[i + 3];
 					}
 
-					// TODO: Ausgeben
-					info(ssid);
+					// Status setzen
+					status_ssid = ssid;
 
 					// Antworten
 					SR_reply(1);
@@ -375,8 +379,8 @@ void SR_parse(char package[], unsigned int package_length)
 					// Signal-Stärke abrufen
 					int wlan_strength = package[2];
 
-					// TODO: Signal-Stärke ausgeben
-					info(String(wlan_strength));
+					// Status setzen
+					status_strength = String(wlan_strength) += "%";
 
 					// Antworten
 					SR_reply(1);
@@ -410,4 +414,18 @@ void SR_parse(char package[], unsigned int package_length)
 			break;
 		}
 	}
+}
+
+// SSID abrufen
+String SR_get_ssid()
+{
+	// SSID zurückgeben
+	return status_ssid;
+}
+
+// Signalstärke abrufen
+String SR_get_strength()
+{
+	// Signalstärke zurückgeben
+	return status_strength;
 }
