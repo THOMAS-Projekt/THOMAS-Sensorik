@@ -1,13 +1,13 @@
 // ++++++++++++++++++++<[ DEFINITIONEN ]>++++++++++++++++++++
 // Trigger-Port
-#define US_trig_pin 36
+#define US_trig_pin 33
 
 // Sensor-Timeout in µs
 #define US_timeout 250000
 
 // ++++++++++++++++++++<[ VARIABELN ]>++++++++++++++++++++
 // Echo-Ports
-int US_echo_pins[] = {2, 3, 44, 5, 6};
+int US_echo_pins[] = {53, 51, 49, 37, 35}; // Sechster: 31
 
 // Anzahl der Sensoren (Darf 256 nicht übersteigen, sonst Protokollanpassung erforderlich!)
 int US_count = 5;

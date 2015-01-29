@@ -1,6 +1,6 @@
 // ++++++++++++++++++++<[ DEFINITIONEN ]>++++++++++++++++++++
 // Port für die Datenleitung des IR-Sensors
-#define IR_rec_port 11
+#define IR_rec_port 44
 
 // Infrarot-Befehle
 #define IR_mute "270d"
