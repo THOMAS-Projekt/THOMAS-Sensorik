@@ -382,6 +382,9 @@ void SR_parse(char package[], unsigned int package_length)
 					// Status setzen
 					status_strength = String(wlan_strength) += "%";
 
+					// Wert der Statusanzeige setzen
+					ST_set_strength_bar(wlan_strength);
+
 					// Antworten
 					SR_reply(1);
 

@@ -17,6 +17,10 @@
 #define HW_DEFEKT 0
 #define HW_OK 1
 
+// Port-Expander-Zustände
+#define IIC_OFF 1
+#define IIC_ON 0
+
 // Ultraschallsensoren
 #define US_FRONT_RIGHT 0
 #define US_FRONT_MIDDLE 1
@@ -35,6 +39,9 @@ void setup()
 
 	// LCD initialisieren
 	LCD_init();
+
+	// Statusanzeige initialisieren
+	ST_init();
 
 	// Infrarot-Sensor initialisieren
 	IR_init();
