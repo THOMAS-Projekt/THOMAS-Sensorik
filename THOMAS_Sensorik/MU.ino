@@ -41,7 +41,7 @@ int current_page;
 	// 2 => Ultraschallsensoren
 
 // Anzahl an Objekten
-int object_count = 20;
+int object_count = 22;
 
 // Die Objekte {Seite, Text, Breite, X, Y, 0}
 MU_OBJECT objects[] = {
