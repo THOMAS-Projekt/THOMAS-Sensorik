@@ -75,6 +75,9 @@ void loop()
 	// Menü neu zeichnen
 	MU_update(changed);
 
+	// Heartbeat prüfen
+	SR_check_heartbeat();
+
 	// Kurz warten
 	delay(50);
 }

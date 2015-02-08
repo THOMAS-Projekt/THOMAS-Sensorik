@@ -12,6 +12,9 @@ String status_ssid = "?";
 // Die aktuelle Signalstärke
 String status_strength = "?";
 
+// Zeitpunkt des letzten Heartbeats
+unsigned long heartbeat_time = 0;
+
 // ++++++++++++++++++++<[ FUNKTIONEN ]>++++++++++++++++++++
 // Initialisierung
 void SR_init()
@@ -111,6 +114,16 @@ void SR_parse(char package[], unsigned int package_length)
 		// Heartbeat
 		case 0:
 		{
+			// Erster Heartbeat?
+			if(heartbeat_time == 0)
+			{
+				// Ja => Motorsteuerung einschalten
+				RL_set_motor_control(RELAY_ON);
+			}
+
+			// Zeitpunkt merken
+			heartbeat_time = millis();
+
 			// Antworten
 			SR_reply(1);
 
@@ -431,4 +444,22 @@ String SR_get_strength()
 {
 	// Signalstärke zurückgeben
 	return status_strength;
+}
+
+// Heartbeat prüfen
+void SR_check_heartbeat()
+{
+	// Heartbeat schon gestartet?
+	if(heartbeat_time != 0)
+	{
+		// Ja => Wie lange liegt der Heartbeat zurück?
+		if(millis() - 1500 > heartbeat_time)
+		{
+			// Zu lange => Fehler
+			error("Ich verblute...");
+
+			// Motorsteuerung deaktivieren
+			RL_set_motor_control(RELAY_OFF);
+		}
+	}
 }

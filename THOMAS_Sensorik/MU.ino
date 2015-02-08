@@ -180,6 +180,9 @@ void MU_message(String message)
 
 	// Neue Nachricht nach oben
 	message0 = String(message);
+
+	// Auf Meldungsseite springen
+	current_page = 0;
 }
 
 // Seite aufrufen
