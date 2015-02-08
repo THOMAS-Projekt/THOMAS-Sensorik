@@ -54,6 +54,8 @@ MU_OBJECT objects[] = {
 		{1, "!%SSID%!", 14, 6, 1, 0},
 		{1, "Signalstaerke: ", 15, 0, 2, 0},
 		{1, "!%STRENGTH%!", 5, 15, 2, 0},
+		{1, "Motorsteuerung: ", 16, 0, 3, 0},
+		{1, "!%MOTOREN%!", 4, 16, 3, 0},
 		{2, "+++ US-Sensoren ++++", 20, 0, 0, 0},
 		{2, "FL: ", 4, 0, 1, 0},
 		{2, "!%US_FL%!", 6, 4, 1, 0},
@@ -81,10 +83,10 @@ void MU_init()
 }
 
 // Aktuelles Menü zeichnen
-void MU_update()
+void MU_update(bool ignore_timer)
 {
 	// Nächster Frame?
-	if(loops >= 1)
+	if(loops >= 1 || ignore_timer)
 	{
 		// Ja => Alle Objekte durchlaufen
 		for(int i = 0; i < object_count; i++)
@@ -156,6 +158,7 @@ String MU_parse(String txt)
 	txt.replace("!%MELDUNG2%!", message2);
 	txt.replace("!%SSID%!", SR_get_ssid());
 	txt.replace("!%STRENGTH%!", SR_get_strength());
+	txt.replace("!%MOTOREN%!", RL_get_motor_control_status() ? "AUS" : "AN");
 	txt.replace("!%US_FL%!", US_get_str(US_FRONT_LEFT));
 	txt.replace("!%US_FM%!", US_get_str(US_FRONT_MIDDLE));
 	txt.replace("!%US_FR%!", US_get_str(US_FRONT_RIGHT));
@@ -209,5 +212,24 @@ void MU_next_page()
 	{
 		// Ja => Zurück zum Anfang
 		current_page = 0;
+	}
+}
+
+// Vorherige Seite
+void MU_previous_page()
+{
+	// Display leeren
+	LCD_clear();
+
+	// Am Anfang angelangt?
+	if(current_page > 0)
+	{
+		// Nein => Vorherige Seite
+		current_page--;
+	}
+	else
+	{
+		// Ja => Zurück zum Ende
+		current_page = page_count - 1;
 	}
 }

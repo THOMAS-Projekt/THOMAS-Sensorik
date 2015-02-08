@@ -64,6 +64,9 @@ int IR_read()
 		// Daten vorhanden => Daten zwischenspeichern
 		int IR_data = results.value;
 
+		// Einen Moment warten
+		delay (300);
+
 		// Auf nächsten Wert vorbereiten
 		irrecv.resume();
 
@@ -77,8 +80,8 @@ int IR_read()
 	}
 }
 
-// Liest evtl. eingegangene IR-Signale aus und verarbeitet diese
-void IR_process()
+// Liest evtl. eingegangene IR-Signale aus, verarbeitet diese und gibt falls das Kommando verstanden wurde true zurück.
+bool IR_process()
 {
 	// Daten abrufen und in einen hexadezimalen String konvertieren
 	String data = String(IR_read(), HEX);
@@ -91,6 +94,24 @@ void IR_process()
 	}
 	else if(data == IR_right)
 	{
+		// Nächste Menüseite
 		MU_next_page();
 	}
+	else if(data == IR_left)
+	{
+		// Vorherige Menüseite
+		MU_previous_page();
+	}
+	else if(data == IR_power)
+	{
+		// Motorsteuerung umschalten
+		RL_toggle_motor_control();
+	}
+	else
+	{
+		// Kommando nicht erkannt => False zurückgeben
+		return false;
+	}
+
+	return true;
 }

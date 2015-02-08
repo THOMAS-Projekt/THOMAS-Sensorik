@@ -13,6 +13,10 @@
 #define LED_OFF 0
 #define LED_ON 1
 
+// Relay-Zustände
+#define RELAY_OFF 1
+#define RELAY_ON 0
+
 // Hardware-Zustände
 #define HW_DEFEKT 0
 #define HW_OK 1
@@ -43,6 +47,9 @@ void setup()
 	// Statusanzeige initialisieren
 	ST_init();
 
+	// Relais initialisieren
+	RL_init();
+
 	// Infrarot-Sensor initialisieren
 	IR_init();
 
@@ -63,10 +70,10 @@ void setup()
 void loop()
 {
 	// Infrarotsignale verarbeiten
-	IR_process();
+	bool changed = IR_process();
 
 	// Menü neu zeichnen
-	MU_update();
+	MU_update(changed);
 
 	// Kurz warten
 	delay(50);
