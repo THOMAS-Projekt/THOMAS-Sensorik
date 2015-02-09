@@ -460,6 +460,9 @@ void SR_check_heartbeat()
 
 			// Motorsteuerung deaktivieren
 			RL_set_motor_control(RELAY_OFF);
+
+			// Signalstärkenanzeige ausschalten
+			ST_set_strength_bar (0);
 		}
 	}
 }
