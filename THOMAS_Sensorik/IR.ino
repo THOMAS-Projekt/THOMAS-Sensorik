@@ -107,6 +107,16 @@ bool IR_process()
 		// Motorsteuerung umschalten
 		RL_toggle_motor_control();
 	}
+	else if(data == IR_channelup)
+	{
+		// Servo nach rechts drehen
+		SV_cam_increase_degree(10);
+	}
+	else if(data == IR_channeldown)
+	{
+		// Servo nach links drehen
+		SV_cam_decrease_degree(10);
+	}
 	else
 	{
 		// Kommando nicht erkannt => False zurückgeben

@@ -8,6 +8,9 @@
 // Bibliothek für die LCD-Ansteuerung per IIC
 #include <LiquidCrystal_I2C.h>
 
+// Bibliothek zur Ansteuerung von Servo-Motoren
+#include <Servo.h> 
+
 // ++++++++++++++++++++<[ DEFINITIONEN ]>++++++++++++++++++++
 // LED-Zustände
 #define LED_OFF 0
@@ -49,6 +52,9 @@ void setup()
 
 	// Relais initialisieren
 	RL_init();
+
+	// Servos initialisieren
+	SV_init();
 
 	// Infrarot-Sensor initialisieren
 	IR_init();
