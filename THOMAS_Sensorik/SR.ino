@@ -453,7 +453,7 @@ void SR_check_heartbeat()
 	if(heartbeat_time != 0)
 	{
 		// Ja => Wie lange liegt der Heartbeat zurück?
-		if(millis() - 1500 > heartbeat_time)
+		if(millis() - 2000 > heartbeat_time)
 		{
 			// Zu lange => Fehler
 			error("Ich verblute...");
