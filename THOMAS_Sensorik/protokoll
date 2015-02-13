@@ -57,15 +57,15 @@ Zusammensetzung eines Paketes:
 				<byte> Befehl
 					0 => Drehe auf Wert
 					{
-						<byte[Länge int]> Position in grad
-						Rückgabe: <byte[Länge int]> Neue Position in grad
+						<byte> Position in grad
+						Rückgabe: <byte> Neue Position in grad
 					}
 
 					1 => Drehe um Wert
 					{
 						<byte> Richtung (0 -> Nach links | 1 -> Nach rechts)
-						<byte[Länge int]> Änderungswert in grad
-						Rückgabe: <byte[Länge int]> Neue Position in grad
+						<byte> Änderungswert in grad
+						Rückgabe: <byte> Neue Position in grad
 					}
 			}
 	}

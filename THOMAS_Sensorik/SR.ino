@@ -92,7 +92,7 @@ void SR_reply(int data)
 	char resp[1];
 
 	// Eintrag prüfen
-	if (data > 255)
+	if (data > 255 || data < 0)
 	{
 		// Fehlermeldung
 		error("Fehler #001");
@@ -108,22 +108,15 @@ void SR_reply(int data)
 // Erhaltene Daten verarbeiten
 void SR_parse(char package[], unsigned int package_length)
 {
+	// Ein Lebenszeichen!
+	SR_heartbeat_received();
+
 	// Daten verarbeiten
 	switch(package[0])
 	{
 		// Heartbeat
 		case 0:
 		{
-			// Erster Heartbeat?
-			if(heartbeat_time == 0)
-			{
-				// Ja => Motorsteuerung einschalten
-				RL_set_motor_control(RELAY_ON);
-			}
-
-			// Zeitpunkt merken
-			heartbeat_time = millis();
-
 			// Antworten
 			SR_reply(1);
 
@@ -320,7 +313,140 @@ void SR_parse(char package[], unsigned int package_length)
 		// Aktoren ansprechen
 		case 3:
 		{
-			// TODO
+			// Paketlänge prüfen
+			if (package_length < 2)
+			{
+				// Fehlermeldung
+				error("Fehler #010");
+			}
+
+			// Zwischen Aktoren unterscheiden
+			switch(package[1])
+			{
+				// Kameraservo(s)
+				case 0:
+				{
+					// Paketlänge prüfen
+					if (package_length < 4)
+					{
+						// Fehlermeldung
+						error("Fehler #011");
+					}
+
+					// Kamera-ID abrufen
+					int cam_id = package[2];
+
+					// Welcher Befehl?
+					switch(package[3])
+					{
+						// Drehe auf Wert
+						case 0:
+						{
+							// Paketlänge prüfen
+							if (package_length < 5)
+							{
+								// Fehlermeldung
+								error("Fehler #012");
+							}
+
+							// Position abrufen
+							int degree = package[4];
+
+							// Position ändern
+							int new_deg = SV_cam_set_degree(degree);
+
+							// Neue Position korrigieren zurückgeben
+							SR_reply(degree < 0 ? 0 : degree > 255 ? 255 : degree);
+
+							// Fertig!
+							break;
+						}
+
+							// Drehe um Wert
+						case 1:
+						{
+							// Paketlänge prüfen
+							if (package_length < 6)
+							{
+								// Fehlermeldung
+								error("Fehler #013");
+							}
+
+							// Richtung abrufen
+							int direction = package[4];
+
+							// Position abrufen
+							int degree = package[5];
+
+							// Die neue Position
+							int new_deg = 0;
+
+							// Richtung?
+							switch(direction)
+							{
+								// Nach links
+								case 0:
+								{
+									// Position ändern
+									new_deg = SV_cam_decrease_degree(degree);
+
+									// Fertig!
+									break;
+								}
+
+								// Nach rechts
+								case 1:
+								{
+									// Position ändern
+									new_deg = SV_cam_increase_degree(degree);
+
+									// Fertig!
+									break;
+								}
+
+								// Ungültig
+								default:
+								{
+									// Fehlermeldung
+									warning("Ungueltige Richtungsangabe!");
+
+									// Fertig!
+									break;
+								}
+							}
+
+							// Neue Position korrigieren zurückgeben
+							SR_reply(new_deg < 0 ? 0 : new_deg > 255 ? 255 : new_deg);
+
+							// Fertig!
+							break;
+						}
+
+						// Ungültig
+						default:
+						{
+							// Fehlermeldung
+							warning("Ungueltiger Befehl!");
+
+							// Fertig!
+							break;
+						}
+					}
+
+					// Fertig!
+					break;
+				}
+
+				// Ungültig
+				default:
+				{
+					// Fehlermeldung
+					warning("Ungueltiger Sensortyp!");
+
+					// Fertig
+					break;
+				}
+			}
 
 			// Fertig!
 			break;
@@ -444,6 +570,20 @@ String SR_get_strength()
 {
 	// Signalstärke zurückgeben
 	return status_strength;
+}
+
+// Heartbeat verarbeiten
+void SR_heartbeat_received()
+{
+	// Erster Heartbeat?
+	if(heartbeat_time == 0)
+	{
+		// Ja => Motorsteuerung einschalten
+		RL_set_motor_control(RELAY_ON);
+	}
+
+	// Zeitpunkt merken
+	heartbeat_time = millis();
 }
 
 // Heartbeat prüfen
