@@ -95,7 +95,7 @@ void SR_reply(int data)
 	if (data > 255 || data < 0)
 	{
 		// Fehlermeldung
-		error("Fehler #001");
+		critical("Fehler #001");
 	}
 
 	// Eintrag übernehmen
@@ -131,7 +131,7 @@ void SR_parse(char package[], unsigned int package_length)
 			if (package_length < 3)
 			{
 				// Fehlermeldung
-				error("Fehler #002");
+				critical("Fehler #002");
 			}
 
 			// Priorität abrufen
@@ -147,7 +147,7 @@ void SR_parse(char package[], unsigned int package_length)
 			if ((int)package_length != text_length + 3)
 			{
 				// Fehlermeldung
-				error("Fehler #003");
+				critical("Fehler #003");
 			}
 
 			// Textangabe durchlaufen
@@ -215,7 +215,7 @@ void SR_parse(char package[], unsigned int package_length)
 			if (package_length < 2)
 			{
 				// Fehlermeldung
-				error("Fehler #004");
+				critical("Fehler #004");
 			}
 
 			// Zwischen Sensortypen unterscheiden
@@ -228,7 +228,7 @@ void SR_parse(char package[], unsigned int package_length)
 					if (package_length < 4)
 					{
 						// Fehlermeldung
-						error("Fehler #005");
+						critical("Fehler #005");
 					}
 
 					// Sensor-ID abrufen
@@ -317,7 +317,7 @@ void SR_parse(char package[], unsigned int package_length)
 			if (package_length < 2)
 			{
 				// Fehlermeldung
-				error("Fehler #010");
+				critical("Fehler #010");
 			}
 
 			// Zwischen Aktoren unterscheiden
@@ -330,7 +330,7 @@ void SR_parse(char package[], unsigned int package_length)
 					if (package_length < 4)
 					{
 						// Fehlermeldung
-						error("Fehler #011");
+						critical("Fehler #011");
 					}
 
 					// Kamera-ID abrufen
@@ -346,7 +346,7 @@ void SR_parse(char package[], unsigned int package_length)
 							if (package_length < 5)
 							{
 								// Fehlermeldung
-								error("Fehler #012");
+								critical("Fehler #012");
 							}
 
 							// Position abrufen
@@ -369,7 +369,7 @@ void SR_parse(char package[], unsigned int package_length)
 							if (package_length < 6)
 							{
 								// Fehlermeldung
-								error("Fehler #013");
+								critical("Fehler #013");
 							}
 
 							// Richtung abrufen
@@ -459,7 +459,7 @@ void SR_parse(char package[], unsigned int package_length)
 			if (package_length < 2)
 			{
 				// Fehlermeldung
-				error("Fehler #006");
+				critical("Fehler #006");
 			}
 
 			// Eigenschaft wählen
@@ -472,7 +472,7 @@ void SR_parse(char package[], unsigned int package_length)
 					if (package_length < 3)
 					{
 						// Fehlermeldung
-						error("Fehler #007");
+						critical("Fehler #007");
 					}
 
 					// Länge der SSId abrufen
@@ -485,7 +485,7 @@ void SR_parse(char package[], unsigned int package_length)
 					if ((int) package_length != ssid_length + 3)
 					{
 						// Fehlermeldung
-						error("Fehler #008");
+						critical("Fehler #008");
 					}
 
 					// Zeichen durchlaufen
@@ -512,7 +512,7 @@ void SR_parse(char package[], unsigned int package_length)
 					if (package_length < 3)
 					{
 						// Fehlermeldung
-						error("Fehler #009");
+						critical("Fehler #009");
 					}
 
 					// Signal-Stärke abrufen

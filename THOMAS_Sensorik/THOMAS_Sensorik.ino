@@ -118,4 +118,18 @@ void error(String message)
 	MU_message(prfx + message);
 }
 
-// TODO: fatal
+// Kritischer Fehler
+void critical(String message)
+{
+	// Display leeren
+	LCD_clear();
+
+	// Titel zeichnen
+	LCD_print_string (4, 0, "SYSTEMFEHLER");
+
+	// Fehlermeldung zeichnen
+	LCD_print_string (0, 2, message);
+
+	// Programm anhalten
+	while(true) {}
+}
