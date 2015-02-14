@@ -13,7 +13,7 @@ String status_ssid = "?";
 String status_strength = "?";
 
 // Zeitpunkt des letzten Heartbeats
-unsigned long heartbeat_time = 0;
+int heartbeat_time = 0;
 
 // ++++++++++++++++++++<[ FUNKTIONEN ]>++++++++++++++++++++
 // Initialisierung
@@ -36,6 +36,13 @@ void SR_ready()
 // Daten vorhanden
 void serialEvent()
 {
+	// Erstes Lebenszeichen?
+	if(heartbeat_time != 0)
+	{
+		// Nein => Lebenszeichen merken
+		SR_heartbeat_received();
+	}
+
 	// Paketlänge abrufen
 	unsigned int package_length = Serial.read();
 
@@ -108,15 +115,15 @@ void SR_reply(int data)
 // Erhaltene Daten verarbeiten
 void SR_parse(char package[], unsigned int package_length)
 {
-	// Ein Lebenszeichen!
-	SR_heartbeat_received();
-
 	// Daten verarbeiten
 	switch(package[0])
 	{
 		// Heartbeat
 		case 0:
 		{
+			// Ein Lebenszeichen!
+			SR_heartbeat_received();
+
 			// Antworten
 			SR_reply(1);
 
@@ -583,7 +590,7 @@ void SR_heartbeat_received()
 	}
 
 	// Zeitpunkt merken
-	heartbeat_time = millis();
+	heartbeat_time = now();
 }
 
 // Heartbeat prüfen
@@ -593,10 +600,10 @@ void SR_check_heartbeat()
 	if(heartbeat_time != 0)
 	{
 		// Ja => Wie lange liegt der Heartbeat zurück?
-		if(millis() - 2000 > heartbeat_time)
+		if(now() > heartbeat_time + 2)
 		{
 			// Zu lange => Fehler
-			error("Ich verblute...");
+			error("Der Herzschlag setzt aus, ich verblute... :(");
 
 			// Motorsteuerung deaktivieren
 			RL_set_motor_control(RELAY_OFF);

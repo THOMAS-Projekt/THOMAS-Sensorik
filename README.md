@@ -12,3 +12,6 @@ LiquidCrystal, getestet mit Version 1.2.1
 
 IRremote
 (https://github.com/shirriff/Arduino-IRremote)
+
+Time
+(http://www.pjrc.com/teensy/td_libs_Time.html)

@@ -1,4 +1,7 @@
 // ++++++++++++++++++++<[ BIBLIOTHEKEN ]>++++++++++++++++++++
+// Bibliothek für Zeitoperationen
+#include <Time.h>
+
 // Bibliothek für den Infrarotsensoren einbinden
 #include <IRremote.h>
 
@@ -41,9 +44,6 @@
 // Systemininitalisierung
 void setup()
 {
-	// Serielle Schnittstelle initialisieren
-	SR_init();
-
 	// LCD initialisieren
 	LCD_init();
 
@@ -67,6 +67,9 @@ void setup()
 
 	// Menü initialisieren
 	MU_init();
+
+	// Serielle Schnittstelle initialisieren
+	SR_init();
 
 	// Bereit!
 	SR_ready();
