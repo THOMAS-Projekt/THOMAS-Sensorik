@@ -7,7 +7,7 @@
 Servo SV_cam;
 
 // Position des Kamera-Servos in Grad
-int SV_cam_degree = 90;
+int SV_cam_degree = 105;
 
 // ++++++++++++++++++++<[ FUNKTIONEN ]>++++++++++++++++++++
 // Initialisierung

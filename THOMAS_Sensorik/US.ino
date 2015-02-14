@@ -7,7 +7,7 @@
 
 // ++++++++++++++++++++<[ VARIABELN ]>++++++++++++++++++++
 // Echo-Ports
-int US_echo_pins[] = {53, 51, 49, 37, 35}; // Sechster: 31
+int US_echo_pins[] = {35, 51, 37, 49, 53}; // Sechster: 31
 
 // Anzahl der Sensoren (Darf 256 nicht übersteigen, sonst Protokollanpassung erforderlich!)
 int US_count = 5;
@@ -42,6 +42,9 @@ long US_get_cm(int index)
 	// Index überprüfen
 	if(index < US_count)
 	{
+		// Kurz warten um Störungen durch vorherige Messungen zu verhindern
+		delay(100);
+
 		// Existiert => Digitales Signal an alle Sensoren senden
 		digitalWrite(US_trig_pin, LOW);
 		delayMicroseconds(2);
