@@ -7,7 +7,7 @@
 
 // ++++++++++++++++++++<[ VARIABELN ]>++++++++++++++++++++
 // Echo-Ports
-int US_echo_pins[] = {35, 51, 37, 49, 53}; // Sechster: 31
+int US_echo_pins[] = {49, 35, 37, 53, 51}; // Sechster: 31
 
 // Anzahl der Sensoren (Darf 256 nicht übersteigen, sonst Protokollanpassung erforderlich!)
 int US_count = 5;
@@ -82,7 +82,7 @@ String US_get_str(int index)
 	}
 	else
 	{
-		// Nein => Wert der letzten Messung abrufen abrufen
+		// Nein => Wert der letzten Messung abrufen
 		long val = US_last_cm[index];
 
 		// Formatierten String zurückgeben
