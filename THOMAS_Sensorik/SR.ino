@@ -273,15 +273,8 @@ void SR_parse(char package[], unsigned int package_length)
 							// Messung durchführen (Eine Einheit entspricht 2cm.)
 							int val = US_get_cm(us_id) / 2;
 
-							// Wert zu groß?
-							if(val / 2 > 255)
-							{
-								// Korrigieren
-								val = 255;
-							}
-
 							// Antworten
-							SR_reply(val);
+							SR_reply(val > 255 ? 255 : val < 0 ? 0 : val);
 
 							// Fertig!
 							break;
