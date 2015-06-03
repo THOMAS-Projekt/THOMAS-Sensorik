@@ -91,8 +91,10 @@ void loop()
 
 	// Aktueller Ultraschallsensor funktionsfähig?
 	if (US_get_stat(us_index++ < US_get_count() ? us_index : us_index = 0) == HW_OK)
+	{
 		// Wert des aktuellen Ulatraschallsensors aktualisieren
 		US_get_cm(us_index);
+	}
 }
 
 // Info

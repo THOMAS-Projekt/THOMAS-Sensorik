@@ -109,8 +109,28 @@ void US_reload_all()
 	// Alle Sensoren durchlaufen
 	for(int i = 0; i < US_count; i++)
 	{
+		// Sensorwert merken
+		boolean last_stat = US_stat[i];
+
 		// Sensor prüfen
 		US_reload_stat(i);
+
+		// Hat sich der Wert geändert?
+		if(last_stat != US_stat[i])
+		{
+			// Ja => Sensor kaputtgegangen?
+			if(US_stat[i] == HW_DEFEKT)
+			{
+				// Auf der Sensordaten-Seite?
+				if(!MU_is_sensor_data())
+				{
+					// Nein => Warnmeldung
+					warning ("Sensor " + (String)i + " ist defekt.");
+				}
+
+				// TODO: Akustischer Warnton?
+			}
+		}
 	}
 }
 
