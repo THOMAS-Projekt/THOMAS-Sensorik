@@ -3,7 +3,7 @@
 #define US_trig_pin 33
 
 // Sensor-Timeout in µs
-#define US_timeout 250000
+#define US_timeout 100000
 
 // ++++++++++++++++++++<[ VARIABELN ]>++++++++++++++++++++
 // Echo-Ports
