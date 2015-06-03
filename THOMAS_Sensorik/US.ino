@@ -42,9 +42,6 @@ long US_get_cm(int index)
 	// Index überprüfen
 	if(index < US_count)
 	{
-		// Kurz warten um Störungen durch vorherige Messungen zu verhindern
-		delay(100);
-
 		// Existiert => Digitales Signal an alle Sensoren senden
 		digitalWrite(US_trig_pin, LOW);
 		delayMicroseconds(2);
@@ -63,6 +60,22 @@ long US_get_cm(int index)
 
 		// Messwert zurückgeben
 		return val;
+	}
+	else
+	{
+		// Sensor nicht definiert => Fehlerhaften Wert zurückgeben
+		return 0;
+	}
+}
+
+// Wert letzter Messung abrufen
+long US_get_last_cm(int index)
+{
+	// Index überprüfen
+	if(index < US_count)
+	{
+		// Letzten Messwert zurückgeben
+		return US_last_cm[index];
 	}
 	else
 	{

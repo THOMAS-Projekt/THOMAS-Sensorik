@@ -39,6 +39,8 @@
 #define US_BACK_LEFT 4
 
 // ++++++++++++++++++++<[ VARIABELN ]>++++++++++++++++++++
+// Momentan geprüfter Sensor
+int us_index = 0;
 
 // ++++++++++++++++++++<[ HAUPTPROGRAMM ]>++++++++++++++++++++
 // Systemininitalisierung
@@ -87,8 +89,10 @@ void loop()
 	// Heartbeat prüfen
 	SR_check_heartbeat();
 
-	// Kurz warten
-	delay(50);
+	// Aktueller Ultraschallsensor funktionsfähig?
+	if (US_get_stat(us_index++ < US_get_count() ? us_index : us_index = 0) == HW_OK)
+		// Wert des aktuellen Ulatraschallsensors aktualisieren
+		US_get_cm(us_index);
 }
 
 // Info
