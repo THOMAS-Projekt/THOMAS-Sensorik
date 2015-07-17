@@ -234,10 +234,3 @@ void MU_previous_page()
 		current_page = page_count - 1;
 	}
 }
-
-// Prüfen ob die Sensordaten-Seite geöffnet ist
-boolean MU_is_sensor_data()
-{
-	// Seite prüfen
-	return current_page == 2;
-}

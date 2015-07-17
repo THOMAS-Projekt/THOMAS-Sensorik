@@ -244,29 +244,6 @@ void SR_parse(char package[], unsigned int package_length)
 					// Welcher Befehl?
 					switch(package[3])
 					{
-						// Status aktualisieren
-						case 0:
-						{
-							// Status aktualisieren
-							US_reload_stat(us_id);
-
-							// Status senden
-							SR_reply(US_get_stat(us_id) ? 1 : 0);
-
-							// Fertig!
-							break;
-						}
-
-						// Status abrufen
-						case 1:
-						{
-							// Status senden
-							SR_reply(US_get_stat(us_id) ? 1 : 0);
-
-							// Fertig!
-							break;
-						}
-
 						// Messwert abrufen
 						case 2:
 						{

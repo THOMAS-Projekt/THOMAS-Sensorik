@@ -49,12 +49,7 @@ bool IR_process()
 	String data = String(IR_read(), HEX);
 
 	// Daten empfangen => Inhalt verarbeiten
-	if(data == "cd42" || data == "48b4")
-	{
-		// Sensorzustände aktualisieren
-		US_reload_all();
-	}
-	else if(data == "c2a6" || data == "5830")
+	if(data == "c2a6" || data == "5830")
 	{
 		// Nächste Menüseite
 		MU_next_page();

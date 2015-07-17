@@ -23,10 +23,6 @@
 #define RELAY_OFF 1
 #define RELAY_ON 0
 
-// Hardware-Zustände
-#define HW_DEFEKT 0
-#define HW_OK 1
-
 // Port-Expander-Zustände
 #define IIC_OFF 1
 #define IIC_ON 0
@@ -64,9 +60,6 @@ void setup()
 	// Ultraschall-Sensoren initialisieren
 	US_init();
 
-	// Ultraschallsensoren auf Funktionsfähigkeit prüfen
-	US_reload_all();
-
 	// Menü initialisieren
 	MU_init();
 
@@ -89,12 +82,8 @@ void loop()
 	// Heartbeat prüfen
 	SR_check_heartbeat();
 
-	// Aktueller Ultraschallsensor funktionsfähig?
-	if (US_get_stat(us_index++ < US_get_count() ? us_index : us_index = 0) == HW_OK)
-	{
-		// Wert des aktuellen Ulatraschallsensors aktualisieren
-		US_get_cm(us_index);
-	}
+	// Wert des aktuellen Ulatraschallsensors aktualisieren
+	US_get_cm(us_index++ < US_get_count() ? us_index : us_index = 0);
 }
 
 // Info

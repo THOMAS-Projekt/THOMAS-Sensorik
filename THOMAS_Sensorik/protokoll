@@ -31,16 +31,6 @@ Zusammensetzung eines Paketes:
 			{
 				<byte> Sensor-ID (0 - 4)
 				<byte> Befehl
-					0 => Status aktualisieren
-					{
-						Rückgabe: <byte> Status (0 -> Sensor O.K. | 1 -> Defekt)
-					}
-
-					1 => Status abrufen
-					{
-						Rückgabe: <byte> Status (0 -> Sensor O.K. | 1 -> Defekt)
-					}
-
 					2 => Messwert abrufen
 					{
 						Rückgabe: <byte> Messwert in cm (Eine Einheit entspricht 2cm)

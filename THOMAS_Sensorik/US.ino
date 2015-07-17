@@ -12,9 +12,6 @@ int US_echo_pins[] = {49, 35, 37, 53, 51}; // Sechster: 31
 // Anzahl der Sensoren (Darf 256 nicht übersteigen, sonst Protokollanpassung erforderlich!)
 int US_count = 5;
 
-// Definiert den Status jedes Sensors (Standardwert: HW_DEFEKT)
-boolean US_stat[] = {HW_DEFEKT, HW_DEFEKT, HW_DEFEKT, HW_DEFEKT, HW_DEFEKT};
-
 // Gibt die Ergebnisse der letzten Messungen an
 long US_last_cm[] = {0, 0, 0, 0, 0};
 
@@ -87,82 +84,12 @@ long US_get_last_cm(int index)
 // Die Entfernung des angegebenen Sensors als String formatieren und zurückgeben
 String US_get_str(int index)
 {
-	// Defekt?
-	if(US_get_stat(index) == HW_DEFEKT)
-	{
-		// Ja => Info zurückgeben
-		return "DEF";
-	}
-	else
-	{
-		// Nein => Wert der letzten Messung abrufen
-		long val = US_last_cm[index];
 
-		// Formatierten String zurückgeben
-		return String(val) + "cm";
-	}
-}
+	// Wert der letzten Messung abrufen
+	long val = US_last_cm[index];
 
-// Prüft welche Sensoren funktionieren und welche Defekt scheinen
-void US_reload_all()
-{
-	// Alle Sensoren durchlaufen
-	for(int i = 0; i < US_count; i++)
-	{
-		// Sensorwert merken
-		boolean last_stat = US_stat[i];
-
-		// Sensor prüfen
-		US_reload_stat(i);
-
-		// Hat sich der Wert geändert?
-		if(last_stat != US_stat[i])
-		{
-			// Ja => Sensor kaputtgegangen?
-			if(US_stat[i] == HW_DEFEKT)
-			{
-				// Auf der Sensordaten-Seite?
-				if(!MU_is_sensor_data())
-				{
-					// Nein => Warnmeldung
-					warning ("Sensor " + (String)i + " ist defekt.");
-				}
-
-				// TODO: Akustischer Warnton?
-			}
-		}
-	}
-}
-
-// Prüft den Sensor auf Funktionalität
-void US_reload_stat(int index)
-{
-	// Prüfen ob der Sensor auf Anfragen reagiert
-	if(US_get_cm(index) == 0)
-	{
-		// Sensor antwortet nicht => Defekt
-		US_stat[index] = HW_DEFEKT;
-	}
-	else
-	{
-		// Sensor sendet brauchbare Antwort => alles OK
-		US_stat[index] = HW_OK;
-	}
-}
-
-// Gibt den Status des angegebenen Sensors zurück
-boolean US_get_stat(int index)
-{
-	// Index überprüfen
-	if(index < US_count)
-	{
-		// Status zurückgeben
-		return US_stat[index] == HW_OK;
-	}
-	else
-	{
-		return false;
-	}
+	// Formatierten String zurückgeben
+	return String(val) + "cm";
 }
 
 // Ruft die Anzahl an Sensoren ab
