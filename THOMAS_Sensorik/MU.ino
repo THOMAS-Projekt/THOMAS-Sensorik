@@ -98,31 +98,31 @@ void MU_update(bool ignore_timer)
 			if(obj.page == current_page)
 			{
 				// Ja => Text parsen
-				obj.title = MU_parse(obj.title);
+				String obj_title = MU_parse(obj.title);
 
 				// String-Länge mit der Breite vergleichen
-				if((int) obj.title.length() <= obj.width)
+				if((int) obj_title.length() <= obj.width)
 				{
 					// Kein Lauftext => Text zeichnen
-					LCD_print_string(obj.x, obj.y, obj.title);
+					LCD_print_string(obj.x, obj.y, obj_title);
 
 					// Freie Stellen durchlaufen
-					for(int j = 0; j < obj.width - obj.title.length(); j++)
+					for(int j = 0; j < obj.width - obj_title.length(); j++)
 					{
 						// Stelle mit einem Leerzeichen überschreiben
-						LCD_print_string(obj.x + obj.title.length() + j, obj.y, " ");
+						LCD_print_string(obj.x + obj_title.length() + j, obj.y, " ");
 					}
 				}
 				else
 				{
 					// Lauftext => Text kürzen
-					String content = obj.title.substring(obj.scroll_x, obj.scroll_x + obj.width);
+					String content = obj_title.substring(obj.scroll_x, obj.scroll_x + obj.width);
 
 					// Text zeichnen
 					LCD_print_string(obj.x, obj.y, content);
 
 					// Scrollposition prüfen
-					if(obj.scroll_x >= (int)obj.title.length() - obj.width)
+					if(obj.scroll_x >= (int)obj_title.length() - obj.width)
 					{
 						// Am Ende => Zum Anfang
 						obj.scroll_x = 0;
@@ -173,10 +173,8 @@ String MU_parse(String txt)
 void MU_message(String message)
 {
 	// Neuesten zwei Nachrichten nach unten verschieben
-	// FIXME: Irgendein Problem mit den Referenzen, welches dazu führt, dass der Arduino willkürliche stellen aus dem Speicher ausgibt.
-	// FIXME: Hier muss den unteren Zeilen der Wert des darüberliegenden Strings übergeben werden und nicht dessen Objekt.
-	//message2 = String(message1);
-	//message1 = String(message0);
+	message2 = String(message1);
+	message1 = String(message0);
 
 	// Neue Nachricht nach oben
 	message0 = String(message);
