@@ -3,34 +3,40 @@
 #define SV_cam_port 2
 
 // ++++++++++++++++++++<[ VARIABELN ]>++++++++++++++++++++
-// Kamera-Servo
-Servo SV_cam;
-
 // Position des Kamera-Servos in Grad
-int SV_cam_degree = 105;
+int SV_cam_degree = 0;
 
 // ++++++++++++++++++++<[ FUNKTIONEN ]>++++++++++++++++++++
 // Initialisierung
 void SV_init()
 {
-	// Kamera-Servo konfigurieren
-	SV_cam.attach(SV_cam_port);
-
-	// Kamera-Servo auf Standardwert drehen
-	SV_cam_set_degree(SV_cam_degree);
+	// Servo auf standardposition fahren
+	SV_cam_set_degree (105);
 }
 
 // Servo-position setzen
 int SV_cam_set_degree(int value)
 {
+	// Servo-Objekt erstellen
+	Servo servo;
+
+	// Kamera-Servo initialisieren
+	servo.attach(SV_cam_port);
+
 	// Wert korrigieren
 	value = SV_validate_degree(value);
 
 	// Position setzen
-	SV_cam.write(value);
+	servo.write(value);
+
+	// Einen Moment warten, damit der Servo die Position annehmen kann (Für den Workaround leider nötig...)
+	delay (15 * abs(SV_cam_degree - value));
 
 	// Variable aktualisieren
 	SV_cam_degree = value;
+
+	// Servo-Verbindung wieder trennen (Auf diese weise kann das ständige Ruckeln verhindert werden)
+	servo.detach ();
 
 	// Wert zurückgeben
 	return SV_cam_degree;
@@ -39,33 +45,15 @@ int SV_cam_set_degree(int value)
 // Servo-position erhöhen
 int SV_cam_increase_degree(int value)
 {
-	// Wert draufaddieren und Ergebnis korrigieren
-	value = SV_validate_degree(SV_cam_degree + value);
-
-	// Position setzen
-	SV_cam.write(value);
-
-	// Variable aktualisieren
-	SV_cam_degree = value;
-
-	// Wert zurückgeben
-	return SV_cam_degree;
+	// Servo ansteuern und neuen Wert zurückgeben
+	return SV_cam_set_degree(SV_cam_degree + value);
 }
 
 // Servo-position verkleinern
 int SV_cam_decrease_degree(int value)
 {
-	// Wert abziehen und Ergebnis korrigieren
-	value = SV_validate_degree(SV_cam_degree - value);
-
-	// Position setzen
-	SV_cam.write(value);
-
-	// Variable aktualisieren
-	SV_cam_degree = value;
-
-	// Wert zurückgeben
-	return SV_cam_degree;
+	// Servo ansteuern und neuen Wert zurückgeben
+	return SV_cam_set_degree(SV_cam_degree - value);
 }
 
 // Korrigiert den Grad-Wert
