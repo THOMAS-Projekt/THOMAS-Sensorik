@@ -232,26 +232,32 @@ void SR_parse(char package[], unsigned int package_length)
 				case 0:
 				{
 					// Paketlänge prüfen
-					if (package_length < 4)
+					if (package_length < 3)
 					{
 						// Fehlermeldung
 						critical("Fehler #005");
 					}
 
-					// Sensor-ID abrufen
-					int us_id = package[2];
-
 					// Welcher Befehl?
-					switch(package[3])
+					switch(package[2])
 					{
 						// Messwert abrufen
-						case 2:
+						case 0:
 						{
-							// Messung durchführen (Eine Einheit entspricht 2cm.)
-							int val = US_get_last_cm(us_id) / 2;
+							// Byte-Array für die Rückgabe
+							char resp[US_get_count()];
+
+							// Sensoren durchlaufen
+							for (int index = 0; index = US_get_count(); index++) {
+								// Messung durchführen (Eine Einheit entspricht 2cm.)
+								int val = US_get_last_cm(index) / 2;
+
+								// Antwort ergänzen
+								resp[index] = val > 255 ? 255 : val < 0 ? 0 : val;
+							}
 
 							// Antworten
-							SR_reply(val > 255 ? 255 : val < 0 ? 0 : val);
+							SR_send(resp, US_get_count());
 
 							// Fertig!
 							break;

@@ -29,11 +29,10 @@ Zusammensetzung eines Paketes:
 		<byte> Sensortyp
 			0 => Ultraschallsensoren
 			{
-				<byte> Sensor-ID (0 - 4)
 				<byte> Befehl
-					2 => Messwert abrufen
+					0 => Messwerte abrufen
 					{
-						Rückgabe: <byte> Messwert in cm (Eine Einheit entspricht 2cm)
+						Rückgabe: 5x <byte> Messwert in cm pro Sensor (Eine Einheit entspricht 2cm)
 					}
 			}
 	}
