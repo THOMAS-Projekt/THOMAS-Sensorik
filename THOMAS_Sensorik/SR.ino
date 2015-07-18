@@ -248,7 +248,7 @@ void SR_parse(char package[], unsigned int package_length)
 							char resp[US_get_count()];
 
 							// Sensoren durchlaufen
-							for (int index = 0; index = US_get_count(); index++) {
+							for (int index = 0; index < US_get_count(); index++) {
 								// Messung durchführen (Eine Einheit entspricht 2cm.)
 								int val = US_get_last_cm(index) / 2;
 
