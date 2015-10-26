@@ -75,6 +75,12 @@ Zusammensetzung eines Paketes:
 				Rückgabe: <byte> Bestätigung: 1
 			}
 	}
+	
+	5 => Minimalmodus
+	{
+		<byte> Aktiv
+		Rückgabe: <byte> Bestätigung: 1
+	}
 }
 
 ======================================
