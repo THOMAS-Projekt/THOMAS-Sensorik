@@ -16,7 +16,7 @@ int US_count = 5;
 long US_last_cm[] = {0, 0, 0, 0, 0};
 
 // Zwischenspeicher für die Zeitmessung
-long US_duration;
+long US_duration = 0;
 
 // ++++++++++++++++++++<[ FUNKTIONEN ]>++++++++++++++++++++
 // Sensoren initialisieren

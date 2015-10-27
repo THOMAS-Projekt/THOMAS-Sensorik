@@ -38,6 +38,9 @@
 // Momentan geprüfter Sensor
 int us_index = 0;
 
+// Gibt an ob der Minimalmodus aktiviert ist.
+bool minimal_mode = false;
+
 // ++++++++++++++++++++<[ HAUPTPROGRAMM ]>++++++++++++++++++++
 // Systemininitalisierung
 void setup()
@@ -82,8 +85,12 @@ void loop()
 	// Heartbeat prüfen
 	SR_check_heartbeat();
 
-	// Wert des aktuellen Ulatraschallsensors aktualisieren
-	US_get_cm(us_index++ < US_get_count() ? us_index : us_index = 0);
+	// Prüfen ob der Minimalmodus gewählt ist
+	if (!minimal_mode)
+	{
+		// Wert des aktuellen Ulatraschallsensors aktualisieren
+		US_get_cm(us_index++ < US_get_count() ? us_index : us_index = 0);
+	}
 }
 
 // Info

@@ -35,7 +35,7 @@ float loops = 0;
 int page_count = 3;
 
 // Die aktuelle Menü-Seite
-int current_page;
+int current_page = 0;
 	// 0 => Hauptmenü
 	// 1 => Status
 	// 2 => Ultraschallsensoren
@@ -144,8 +144,8 @@ void MU_update(bool ignore_timer)
 	}
 	else
 	{
-		// Nein => Weiterzählen (Alle 25 Durchläufe einen Weiter: 1/25=0.04)
-		loops += 0.04;
+		// Nein => Weiterzählen (Alle 25 normale Durchläufe einen Weiter: 1/25=0.04)
+		loops += minimal_mode ? 0.0005 : 0.04;
 	}
 }
 

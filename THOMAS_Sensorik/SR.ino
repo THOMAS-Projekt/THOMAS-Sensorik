@@ -529,6 +529,29 @@ void SR_parse(char package[], unsigned int package_length)
 			break;
 		}
 
+		// Heartbeat
+		case 5:
+		{
+			// Paketlänge prüfen
+			if (package_length < 2)
+			{
+				// Fehlermeldung
+				critical("Fehler #010");
+			}
+
+			// Ein Lebenszeichen!
+			minimal_mode = package[1];
+
+			// Antworten
+			SR_reply(1);
+
+			// Infomeldung
+			info ("Minimalmodus aktiviert.");
+
+			// Fertig!
+			break;
+		}
+
 		// Ungültig
 		default:
 		{
@@ -576,7 +599,7 @@ void SR_check_heartbeat()
 	if(heartbeat_time != 0)
 	{
 		// Ja => Wie lange liegt der Heartbeat zurück?
-		if(now() > heartbeat_time + 2)
+		if(heartbeat_time > -1 && now() > heartbeat_time + 2)
 		{
 			// Zu lange => Fehler
 			error("Der Herzschlag setzt aus, ich verblute... :(");
@@ -586,6 +609,9 @@ void SR_check_heartbeat()
 
 			// Signalstärkenanzeige ausschalten
 			ST_set_strength_bar (0);
+
+			// Heartbeat-Überprüfung deaktivieren
+			heartbeat_time = -1;
 		}
 	}
 }
