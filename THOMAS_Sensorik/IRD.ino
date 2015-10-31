@@ -12,6 +12,9 @@
 // Messwert abrufen (0 => Kleiner Sensor, 1 => Großer sensor)
 int IRD_get_distance(int sensor)
 {
+	// Warten
+	delay(15);
+
 	// Messung durchführen
 	double value = analogRead (sensor == 0 ? IRD_sensor_small_port : IRD_sensor_large_port);
 

@@ -50,7 +50,7 @@ void serialEvent()
 	if(package_length > 0)
 	{
 		// Gültiges Paket => Puffer für das Paket erstellen
-		char package[package_length];
+		unsigned char package[package_length];
 
 		// Daten empfangen und in den Puffer schreiben (wartet maximal SR_timeout millisekunden auf Daten)
 		if(Serial.readBytes(package, package_length) == package_length)
@@ -72,7 +72,7 @@ void serialEvent()
 }
 
 // Ein Paket an den PC senden
-void SR_send(char package[], unsigned int package_length)
+void SR_send(unsigned char package[], unsigned int package_length)
 {
 	// Paketlänge gültig?
 	if(package_length > 0 && package_length < 256)
@@ -96,7 +96,7 @@ void SR_send(char package[], unsigned int package_length)
 void SR_reply(int data)
 {
 	// Das Array für die Antwort
-	char resp[1];
+	unsigned char resp[1];
 
 	// Eintrag prüfen
 	if (data > 255 || data < 0)
@@ -106,14 +106,14 @@ void SR_reply(int data)
 	}
 
 	// Eintrag übernehmen
-	resp[0] = (char) data;
+	resp[0] = (unsigned char) data;
 
 	// Daten senden
 	SR_send(resp, 1);
 }
 
 // Erhaltene Daten verarbeiten
-void SR_parse(char package[], unsigned int package_length)
+void SR_parse(unsigned char package[], unsigned int package_length)
 {
 	// Daten verarbeiten
 	switch(package[0])
@@ -245,7 +245,7 @@ void SR_parse(char package[], unsigned int package_length)
 						case 0:
 						{
 							// Byte-Array für die Rückgabe
-							char resp[US_get_count()];
+							unsigned char resp[US_get_count()];
 
 							// Sensoren durchlaufen
 							for (int index = 0; index < US_get_count(); index++) {
@@ -575,23 +575,27 @@ void SR_parse(char package[], unsigned int package_length)
 			int measurement_count = small_measurement_count + large_measurement_count;
 
 			// Das Array für die Antwort
-			char resp[measurement_count];
+			unsigned char resp[measurement_count * 2];
 
 			// Servo drehen
 			SV_cam_set_degree (angle);
 
 			// Messungen durchzählen
-			for (int i = 0; i < measurement_count; i++)
+			for (int i = 0; i < measurement_count * 2; i += 2)
 			{
 				// Messung durchführen
 				int distance = IRD_get_distance (i < small_measurement_count ? 0 : 1);
-				
+
 				// Messwert validieren und in Antwort speichern
-				resp[i] = distance < 0 ? 0 : distance > 255 ? 255 : distance;
+				int validated = distance < 0 ? 0 : distance;
+
+				// Messwert in 2 Bytes aufteilen
+				resp[i] = (validated >> 8) & 0xff;
+				resp[i+1] = validated & 0xff;
 			}
 
 			// Antwort senden
-			SR_send (resp, measurement_count);
+			SR_send (resp, measurement_count * 2);
 
 			// Fertig!
 			break;
