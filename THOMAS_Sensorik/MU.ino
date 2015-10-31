@@ -29,7 +29,7 @@ struct MU_OBJECT {
 
 // ++++++++++++++++++++<[ VARIABELN ]>++++++++++++++++++++
 // Zählt die Anzahl durchläufe
-float loops = 0;
+int loops = 0;
 
 // Anzahl an Seiten
 int page_count = 3;
@@ -86,7 +86,7 @@ void MU_init()
 void MU_update(bool ignore_timer)
 {
 	// Nächster Frame?
-	if(loops >= 1 || ignore_timer)
+	if(loops >= 2000 || ignore_timer)
 	{
 		// Ja => Alle Objekte durchlaufen
 		for(int i = 0; i < object_count; i++)
@@ -144,8 +144,8 @@ void MU_update(bool ignore_timer)
 	}
 	else
 	{
-		// Nein => Weiterzählen (Alle 25 normale Durchläufe einen Weiter: 1/25=0.04)
-		loops += minimal_mode ? 0.0005 : 0.04;
+		// Nein => Weiterzählen
+		loops += minimal_mode ? 1 : 80;
 	}
 }
 
