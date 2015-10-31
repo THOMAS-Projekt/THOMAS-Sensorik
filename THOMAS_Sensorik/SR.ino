@@ -1,6 +1,6 @@
 // ++++++++++++++++++++<[ DEFINITIONEN ]>++++++++++++++++++++
 // Baudrate für serielle Schnittstelle
-#define SR_baud 9600
+#define SR_baud 115200
 
 // Maximale Zeit für eine Paketübertragung
 #define SR_timeout 1000
