@@ -75,11 +75,19 @@ Zusammensetzung eines Paketes:
 				Rückgabe: <byte> Bestätigung: 1
 			}
 	}
-	
+
 	5 => Minimalmodus
 	{
 		<byte> Aktiv
 		Rückgabe: <byte> Bestätigung: 1
+	}
+
+	6 => Entfernungsmessung
+	{
+		<byte> Winkel (0-180)
+		<byte> Anzahl Messungen des kleinen Sensors
+		<byte> Anzahl Messungen des großen Sensors
+		Rückgabe: <byte[Anzahl Messungen]> Messwerte
 	}
 }
 

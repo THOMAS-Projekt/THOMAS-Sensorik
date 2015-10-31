@@ -136,5 +136,5 @@ void critical(String message)
 	LCD_print_string (0, 2, message);
 
 	// Programm anhalten
-	while(true) {}
+	while(true);
 }

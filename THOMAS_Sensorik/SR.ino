@@ -529,7 +529,7 @@ void SR_parse(char package[], unsigned int package_length)
 			break;
 		}
 
-		// Heartbeat
+		// Minimalmodus
 		case 5:
 		{
 			// Paketlänge prüfen
@@ -539,7 +539,7 @@ void SR_parse(char package[], unsigned int package_length)
 				critical("Fehler #010");
 			}
 
-			// Ein Lebenszeichen!
+			// Minimalmodus setzen
 			minimal_mode = package[1];
 
 			// Antworten
@@ -547,6 +547,51 @@ void SR_parse(char package[], unsigned int package_length)
 
 			// Infomeldung
 			info ("Minimalmodus aktiviert.");
+
+			// Fertig!
+			break;
+		}
+
+		// Entfernungsmessung
+		case 6:
+		{
+			// Paketlänge prüfen
+			if (package_length < 4)
+			{
+				// Fehlermeldung
+				critical("Fehler #011");
+			}
+
+			// Winkel abrufen
+			int angle = package[1];
+
+			// Anzahl Messungen des kleinen Sensors abrufen
+			int small_measurement_count = package[2];
+
+			// Anzahl Messungen des großen Sensors abrufen
+			int large_measurement_count = package[3];
+
+			// Gesamtanzahl der Messwerte bestimmen.
+			int measurement_count = small_measurement_count + large_measurement_count;
+
+			// Das Array für die Antwort
+			char resp[measurement_count];
+
+			// Servo drehen
+			SV_cam_set_degree (angle);
+
+			// Messungen durchzählen
+			for (int i = 0; i < measurement_count; i++)
+			{
+				// Messung durchführen
+				int distance = IRD_get_distance (i < small_measurement_count ? 0 : 1);
+				
+				// Messwert validieren und in Antwort speichern
+				resp[i] = distance < 0 ? 0 : distance > 255 ? 255 : distance;
+			}
+
+			// Antwort senden
+			SR_send (resp, measurement_count);
 
 			// Fertig!
 			break;
