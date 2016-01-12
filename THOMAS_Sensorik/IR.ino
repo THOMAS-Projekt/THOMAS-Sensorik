@@ -49,27 +49,27 @@ bool IR_process()
 	String data = String(IR_read(), HEX);
 
 	// Daten empfangen => Inhalt verarbeiten
-	if(data == "c2a6" || data == "5830")
+	if(data == "c2a6" || data == "5830" || data == "285b" || data == "1285b" || data == "275b" || data == "1275b")
 	{
 		// Nächste Menüseite
 		MU_next_page();
 	}
-	else if(data == "c439" || data == "59c3")
+	else if(data == "c439" || data == "59c3" || data == "285a" || data == "1285a"|| data == "275a" || data == "1275a")
 	{
 		// Vorherige Menüseite
 		MU_previous_page();
 	}
-	else if(data == "c74a" || data == "8adc")
+	else if(data == "c74a" || data == "8adc" || data == "280c" || data == "1280c" || data == "270c" || data == "1270c")
 	{
 		// Motorsteuerung umschalten
 		RL_toggle_motor_control();
 	}
-	else if(data == "87fe" || data == "fab0")
+	else if(data == "87fe" || data == "fab0" || data == "2820" || data == "12820" || data == "2720" || data == "12720")
 	{
 		// Servo nach rechts drehen
 		SV_cam_increase_degree(10);
 	}
-	else if(data == "4d8f" || data == "606d")
+	else if(data == "4d8f" || data == "606d" || data == "2821" || data == "12821" || data == "2721" || data == "12721")
 	{
 		// Servo nach links drehen
 		SV_cam_decrease_degree(10);
