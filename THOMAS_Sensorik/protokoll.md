@@ -1,15 +1,17 @@
-+++ THOMAS-Protokoll (Version 1.5) +++
+#THOMAS-Protokoll (Version 1.5)
+Protokoll zur Kommunikation zwischen dem Arduino und dem THOMAS-Server auf Byteebene.
+Dabei sendet der THOMAS-Server in bestimmten Abständen Anfragen entsprechend dem Protokoll an den Arduino und bekommt die dazugehörigen Antworten als Byte-Array zurück.
 
-======================================
-THOMAS => Arduino
+##THOMAS => Arduino
 
 Aufbau einer Übermittlung:
+```
 <byte> Paketlänge
 <byte[Paketlänge]> Paket
-
+```
 
 Zusammensetzung eines Paketes:
-
+```
 <byte> Anfrage
 	0 => Heartbeat
 	{
@@ -90,20 +92,21 @@ Zusammensetzung eines Paketes:
 		Rückgabe: <byte[Anzahl Messungen]> Messwerte
 	}
 }
+```
 
-======================================
-Arduino => THOMAS
-
+##Arduino => THOMAS
 Aufbau einer Übermittlung:
+```
 <byte> Paketlänge
 <byte[Paketlänge]> Paket
-
+```
 
 Zusammensetzung eines Paketes:
-
+```
 <byte> Anfrage
 	0 => Start erfolgreich
 	{
 		Server-Software auf THOMAS startet.
 	}
 }
+```
