@@ -12,7 +12,7 @@
 #include <LiquidCrystal_I2C.h>
 
 // Bibliothek zur Ansteuerung von Servo-Motoren
-#include <Servo.h> 
+#include <Servo.h>
 
 // ++++++++++++++++++++<[ DEFINITIONEN ]>++++++++++++++++++++
 // LED-Zustände
@@ -136,5 +136,5 @@ void critical(String message)
 	LCD_print_string (0, 2, message);
 
 	// Programm anhalten
-	while(true);
+	while (true);
 }
